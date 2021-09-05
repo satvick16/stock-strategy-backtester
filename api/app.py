@@ -3,23 +3,22 @@ import matplotlib.pyplot as plt
 import mpld3
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.techindicators import TechIndicators
-from flask import Flask, jsonify
+from flask import Flask, request
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/api/results')
 def evaluate():
     api_key = "TAKUPYKN8M05N9RB"
 
     # user-supplied specs for investment strategy
-    ticker = "IBM"
-    short = 50
-    long = 200
-    qty = 50
-
-    start_date = "2019-09-01"
-    end_date = "2020-09-06"
+    ticker = request.headers['ticker']
+    short = int(request.headers['short'])
+    long = int(request.headers['long'])
+    qty = int(request.headers['qty'])
+    start_date = request.headers['start_date']
+    end_date = request.headers['end_date']
 
     # fetch daily adjusted price data
     ts = TimeSeries(key=api_key, output_format="pandas")
@@ -45,7 +44,7 @@ def evaluate():
 
     total_df = pd.concat([df_ts, df_ti_short, df_ti_long], axis=1)
     total_df.columns = [
-        "price", f"{short}-day moving avg", f"{long}-day moving avg"]
+        "price", f"short_moving_avg", f"long_moving_avg"]
 
     total_df = total_df[start_date:end_date]
 
@@ -53,13 +52,17 @@ def evaluate():
     balance = 0
     num_stocks = 0
 
+    total_df["balance"] = 0
+
     for index, row in total_df.iterrows():
-        if row[f"{short}-day moving avg"] < row[f"{long}-day moving avg"]:
+        if row[f"short_moving_avg"] < row[f"long_moving_avg"]:
             num_stocks += qty
             balance -= row["price"] * qty
         else:
             balance += row["price"] * num_stocks
             num_stocks = 0
+
+        total_df.at[index, 'balance'] = balance
 
     # fig = plt.figure()
     # axes = fig.add_subplot()
@@ -68,8 +71,6 @@ def evaluate():
     # fig.suptitle(f"${balance}", fontsize=16)
 
     # data = mpld3.fig_to_html(fig=fig, no_extras=False, template_type="simple")
-
-    total_df.index.name = str(balance)
 
     data = total_df.to_json(orient="records")
 
