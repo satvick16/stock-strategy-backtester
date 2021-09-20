@@ -81,17 +81,3 @@ export const Plot = ({ data }) => {
         </div>
     )
 }
-
-// <List>
-//     {data.map(point => {
-//         return (
-//             <List.Item key={point.index}>
-//                 <Header>Raw price: {point.price}</Header>
-//                 <Header>Short moving avg: {point.short_moving_avg}</Header>
-//                 <Header>Long moving avg: {point.long_moving_avg}</Header>
-//                 <Header>Balance: ${point.balance}</Header>
-//                 <br />
-//             </List.Item>
-//         )
-//     })}
-// </List>

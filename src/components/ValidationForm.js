@@ -30,7 +30,7 @@ export const ValidationForm = () => {
         e.preventDefault();
         console.log(formData);
 
-        fetch('https://stock-strategy-backtester.herokuapp.com/api/results', {
+        fetch('/api/results', {
             headers: {
                 'ticker': formData.ticker,
                 'short': formData.short,
@@ -40,6 +40,7 @@ export const ValidationForm = () => {
                 'end_date': formData.end_date
             }
         }).then(res => res.json()).then(data => {
+            console.log(data);
             setPlot(data);
         })
     }
