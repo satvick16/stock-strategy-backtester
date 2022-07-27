@@ -4,4 +4,4 @@ This repo contains a Flask + React app that allows users to backtest a simple me
 
 ## Sample output
 
-![alt text](https://github.com/satvick16/stock-strategy-backtester/blob/master/demo.jpg?raw=true)
+![alt text](https://github.com/satvick16/stock-strategy-backtester/blob/master/demo.PNG?raw=true)
