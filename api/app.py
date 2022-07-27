@@ -24,7 +24,7 @@ def backtest():
     # fetch daily adjusted price data
     ts = TimeSeries(key=api_key, output_format="pandas")
 
-    data_ts, meta_data_ts = ts.get_daily_adjusted(
+    data_ts, meta_data_ts = ts.get_daily(
         symbol=ticker, outputsize="full")
 
     # fetch short and long moving average data
