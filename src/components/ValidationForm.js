@@ -82,14 +82,14 @@ export const ValidationForm = () => {
                     <br />
                     <label>Backtest this strategy between </label>
                     <input
-                        name="start_date"
+                        name="start_date (yyyy-mm-dd)"
                         placeholder="enter start date"
                         value={formData.start_date}
                         onChange={handleChange}
                     />
                     <label> and </label>
                     <input
-                        name="end_date"
+                        name="end_date (yyyy-mm-dd)"
                         placeholder="enter end date"
                         value={formData.end_date}
                         onChange={handleChange}

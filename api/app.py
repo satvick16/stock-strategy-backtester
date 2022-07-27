@@ -5,7 +5,7 @@ from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.techindicators import TechIndicators
 from flask import Flask, request
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 
 @app.route('/api/results')
