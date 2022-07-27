@@ -1,9 +1,7 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import mpld3
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.techindicators import TechIndicators
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
@@ -73,3 +71,8 @@ def backtest():
     data = total_df.to_json(orient="records")
 
     return data
+
+
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
